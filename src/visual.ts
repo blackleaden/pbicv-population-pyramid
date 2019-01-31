@@ -54,7 +54,8 @@ export class Visual implements IVisual {
     private textLabel: d3.Selection<SVGElement>;
 
     constructor(options: VisualConstructorOptions) {
-      console.log('Visual constructor', options);
+      console.log('Visual constructor of', options);
+
       this.svg = d3.select(options.element)
         .append('svg')
         .classed('circleCard', true);
@@ -70,11 +71,51 @@ export class Visual implements IVisual {
       this.textLabel = this.container
         .append("text")
         .classed("textLabel", true);
-    }
+    
+        let width: number = 200; //options.viewport.width;
+        let height: number = 250; //options.viewport.height;
+        this.svg.attr({
+          width: width,
+          height: height
+        });
+        let radius: number = Math.min(width, height) / 2.2;
+        this.circle
+          .style("fill", "white")
+          .style("fill-opacity", 0.5)
+          .style("stroke", "black")
+          .style("stroke-width", 2)
+          .attr({
+            r: radius,
+            cx: width / 2,
+            cy: height / 2
+          });
+        let fontSizeValue: number = Math.min(width, height) / 5;
+        this.textValue
+          .text("Value")
+          .attr({
+            x: "50%",
+            y: "50%",
+            dy: "0.35em",
+            "text-anchor": "middle"
+          }).style("font-size", fontSizeValue + "px");
+  
+        let fontSizeLabel: number = fontSizeValue / 4;
+        this.textLabel
+        .text("Label")
+        .attr({
+            x: "50%",
+            y: height / 2,
+            dy: fontSizeValue / 1.2,
+            "text-anchor": "middle"
+        })
+        .style("font-size", fontSizeLabel + "px");
+      }
 
     public update(options: VisualUpdateOptions) {
       let width: number = options.viewport.width;
       let height: number = options.viewport.height;
+      console.log("Update", width, height);
+      let dataView: DataView = options.dataViews[0];
       this.svg.attr({
         width: width,
         height: height
@@ -92,24 +133,26 @@ export class Visual implements IVisual {
         });
       let fontSizeValue: number = Math.min(width, height) / 5;
       this.textValue
-        .text("Value")
+        // .text("Value")
+        .text(dataView.single.value as string)
         .attr({
           x: "50%",
           y: "50%",
           dy: "0.35em",
           "text-anchor": "middle"
         }).style("font-size", fontSizeValue + "px");
-
+  
       let fontSizeLabel: number = fontSizeValue / 4;
       this.textLabel
-      .text("Label")
-      .attr({
+        // .text("Label")
+        .text(dataView.metadata.columns[0].displayName)
+        .attr({
           x: "50%",
           y: height / 2,
           dy: fontSizeValue / 1.2,
           "text-anchor": "middle"
-      })
-      .style("font-size", fontSizeLabel + "px");
+        })
+        .style("font-size", fontSizeLabel + "px");
     }
 
     private static parseSettings(dataView: DataView): VisualSettings {
