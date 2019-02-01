@@ -1,19 +1,55 @@
 {
-    "dataRoles": [
-      {
-        "displayName": "Measure",
-        "name": "measure",
-        "kind": "Measure"
-       }
-    ],
-    "dataViewMappings": [
-      {
-        "conditions": [
-            { "measure": { "max": 1 } }
-        ],
-        "single": {
-            "role": "measure"
+  "dataRoles": [
+    {
+      "displayName": "Measure 1",
+      "name": "myMeasure",
+      "kind": "Measure",
+      "requiredTypes": [
+        {
+          "integer": true
+        },
+        {
+          "numeric": true
         }
-       }
-    ]
+      ],
+      "preferredTypes": [
+        {
+          "integer": true
+        }
+      ]
+    },
+    {
+      "displayName": "Category",
+      "name": "category",
+      "kind": "Grouping"
+    },
+    {
+      "name": "gender",
+      "displayName": "Gender",
+      "kind": "Grouping"
+    }
+  ],
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "category"
+          }
+        },
+        "values": {
+          "group": {
+            "by": "gender",
+            "select": [
+              {
+                "for": {
+                  "in": "myMeasure"
+                }
+              }
+            ]
+          }
+        }
+      }
+    }
+  ]
 }
