@@ -27,7 +27,9 @@
 import "@babel/polyfill";
 import "./../style/visual.less";
 
-import { renderApp, TestComponent } from "./app";
+import { renderReactVisual } from "./app";
+import TestComponent from "./components/TestComponent";
+
 import powerbi from "powerbi-visuals-api";
 
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
@@ -42,15 +44,12 @@ import VisualObjectInstanceEnumerationObject = powerbi.VisualObjectInstanceEnume
 import { VisualSettings } from "./settings";
 
 export class Visual implements IVisual {
-  private settings: VisualSettings;
 
-  private updateCallback: (data: object) => void;
-
-  private render(element: HTMLElement){
-    this.updateCallback = renderApp(element, TestComponent);
-  }
-
-  constructor(options: VisualConstructorOptions) {
+  // private static parseSettings(dataView: DataView): VisualSettings {
+  //   return VisualSettings.parse(dataView) as VisualSettings;
+  // }
+  
+  public constructor(options: VisualConstructorOptions) {
     this.render(options.element);
   }
 
@@ -59,20 +58,21 @@ export class Visual implements IVisual {
     let height: number = options.viewport.height;
     
     let dataView: DataView = options.dataViews[0];
-    this.updateCallback({ width, height });
+    this.updateCallback({ width, height, dataView });
   }
 
-  private static parseSettings(dataView: DataView): VisualSettings {
-    return VisualSettings.parse(dataView) as VisualSettings;
+  // public enumerateObjectInstances(
+  //   options: EnumerateVisualObjectInstancesOptions
+  // ): VisualObjectInstance[] | VisualObjectInstanceEnumerationObject {
+  //   return VisualSettings.enumerateObjectInstances(this.settings || VisualSettings.getDefault(), options);
+  // }
+
+  // private settings: VisualSettings;
+
+  private updateCallback: (data: object) => void;
+
+  private render(element: HTMLElement){
+    this.updateCallback = renderReactVisual(TestComponent, element);
   }
 
-  /**
-   * This function gets called for each of the objects defined in the capabilities files and allows you to select which of the
-   * objects and properties you want to expose to the users in the property pane.
-   */
-  public enumerateObjectInstances(
-    options: EnumerateVisualObjectInstancesOptions
-  ): VisualObjectInstance[] | VisualObjectInstanceEnumerationObject {
-    return VisualSettings.enumerateObjectInstances(this.settings || VisualSettings.getDefault(), options);
-  }
 }
