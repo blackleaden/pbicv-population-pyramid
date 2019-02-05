@@ -1,5 +1,12 @@
 {
   "name": "visual",
+  "license": "MIT",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.akvelon.net:git.ignat.vilesov/pbicv-population-pyramid.git"
+  },
+  "description": "Population Pyramid custom visual",
   "scripts": {
     "pbiviz": "pbiviz",
     "start": "pbiviz start",
@@ -10,6 +17,7 @@
     "@babel/runtime": "^7.2.0",
     "@babel/runtime-corejs2": "^7.2.0",
     "@types/d3": "^3.5.41",
+    "blahblah": "^0.1.0",
     "d3": "^3.5.5",
     "powerbi-visuals-api": "^2.2.2",
     "powerbi-visuals-utils-dataviewutils": "2.0.1",

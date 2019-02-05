@@ -1,13 +1,16 @@
 import * as React from "react";
-
+import DataStubAdapter from "./DataStubAdapter";
 import { PyramidChart } from "./PyramidChart";
+
 
 export const TestComponent = (props: { 
   width?: number, 
   height?: number, 
   dataView?: any,
   children?: React.ReactNode 
-}) => (
+}) => {
+  const Chart = DataStubAdapter(PyramidChart);
+  return (
   <div     
     style={{ 
       width: props.width || 200, 
@@ -18,7 +21,10 @@ export const TestComponent = (props: {
       overflow: "scroll"
     }}
   >
-    <PyramidChart {...props}/>
+    <Chart
+      width={props.width}
+      height={props.height}
+    />
     <hr/> 
     <pre style={{ fontSize: 14 }}>{
       props.dataView && JSON.stringify(props.dataView)
@@ -34,7 +40,7 @@ export const TestComponent = (props: {
           { indent: 0, lines: [] }
         ).lines.join('\n')
       }</pre>
-  </div>
-);
+  </div>)
+};
 
 export default TestComponent;

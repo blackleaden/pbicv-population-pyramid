@@ -2,10 +2,19 @@ import * as React from "react";
 import { BasicBarChart } from "./BasicBarChart";
 import  powerbi from "powerbi-visuals-api"
 
+interface Dataset {
+  title?: string,
+  entries: Array<{
+    name: string;
+    value: number;
+  }>
+};
+
 export interface PyramidChartProps{
   width?: number;
   height?: number;
-  dataView?: powerbi.DataView;
+  title?: string;
+  datasets: Dataset[];
 }
 
 export type PyramidChartState = Readonly<{
@@ -21,7 +30,7 @@ export class PyramidChart extends React.PureComponent<PyramidChartProps, Pyramid
   }
 
   public render () {
-    const { width, height, dataView } = this.props;
+    const { width, height, datasets, title } = this.props;
     
     return (
       <div 
@@ -31,14 +40,8 @@ export class PyramidChart extends React.PureComponent<PyramidChartProps, Pyramid
         layout={"vertical"} 
         width={width}
         height={height}
-        entries={
-          dataView && dataView.categorical 
-          ? dataView.categorical.values.grouped().map((group) => ({
-            name: String(group.name),
-            value: Number(group.values[0].values[0] )
-          }))
-          : []
-        }
+        entries={datasets[0].entries}
+        
         barProps={{ barSize: 30 }}
         xAxis={{}}
         yAxis={{}}
