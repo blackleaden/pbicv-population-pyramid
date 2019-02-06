@@ -1,7 +1,7 @@
 import * as React from "react";
 import DataStubAdapter from "./DataStubAdapter";
 import { PyramidChart } from "./PyramidChart";
-
+import { SolidPyramidChart } from "./SolidPyramidChart";
 
 export const TestComponent = (props: { 
   width?: number, 
@@ -10,6 +10,8 @@ export const TestComponent = (props: {
   children?: React.ReactNode 
 }) => {
   const Chart = DataStubAdapter(PyramidChart);
+  const SecondChart = DataStubAdapter(SolidPyramidChart)
+  
   return (
   <div     
     style={{ 
@@ -21,6 +23,11 @@ export const TestComponent = (props: {
       overflow: "scroll"
     }}
   >
+    <SecondChart
+      width={props.width}
+      height={props.height}
+    />
+    <hr/>
     <Chart
       width={props.width}
       height={props.height}

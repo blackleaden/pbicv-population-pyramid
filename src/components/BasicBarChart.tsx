@@ -121,7 +121,6 @@ export const BasicBarChart = (props: {
           { ...barProps }
           fill="rgba(0,0,0,0.5)"
         />
-        
       </BarChart>
     </div>
   );

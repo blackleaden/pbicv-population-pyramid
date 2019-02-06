@@ -86,7 +86,6 @@ const mapStubData = (data) => ({
         displayValue: Math.min(value, data.columns[0][index]),
         surplus: Math.max(0, value - data.columns[0][index])
         // surplus: [Math.min(value, data.columns[0][index]) + 10, Math.max(0, value - data.columns[0][index]) ]
-
       }))
     },
   ]
