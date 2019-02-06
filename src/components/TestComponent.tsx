@@ -13,11 +13,11 @@ export const TestComponent = (props: {
   return (
   <div     
     style={{ 
-      width: props.width || 200, 
+      width: props.width - 50 || 200, 
       height: props.height || 200,
       outline: "black solid 1px", 
-      padding: "20px", 
-      margin: "4px",
+      padding: "5px", 
+      margin: "2px",
       overflow: "scroll"
     }}
   >

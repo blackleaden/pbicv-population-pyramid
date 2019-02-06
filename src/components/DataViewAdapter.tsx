@@ -1,6 +1,5 @@
 import * as React from "react";
-
-// import { DataView } from "powerbi-visuals-api";
+import powerbi from "powerbi-visuals-api";
 
 export const mapDataView = (dataView) => {
   //   dataView && dataView.categorical 
@@ -19,7 +18,7 @@ export const mapDataView = (dataView) => {
 }
 
 export const DataViewAdapter = (ChartComponent) => 
-(props: { width?: string, height?: number; dataView: DataView }) => {
+(props: { width?: string, height?: number; dataView: powerbi.DataView }) => {
 
   return (
     <ChartComponent 

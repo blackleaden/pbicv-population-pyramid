@@ -1,13 +1,5 @@
 import * as React from "react";
 
-interface Dataset {
-  title: string,
-  entries: Array<{
-    age: string;
-    value: number;
-  }>
-};
-
 const StubData = {
   "title": "Возрастное распределение городского и сельского населения РФ",
   "columnTitles": [
@@ -75,11 +67,27 @@ const mapStubData = (data) => ({
   datasets: [
     { 
       title: data.columnTitles[0], 
-      entries: data.columns[0].map((value, index) => ({ label: data.rowTitles[index],  value }))
+      max:    data.columns[0].reduce((a, v) => (a < v) ? v : a, 0),
+      entries: data.columns[0].map((value, index) => ({ 
+        name: data.rowsTitles[index],  
+        value,
+        displayValue: Math.min(value , data.columns[1][index]),
+        // surplus: [Math.min(value, data.columns[1][index]) + 10, Math.max(0, value - data.columns[1][index]) ]
+        surplus: Math.max(0, value - data.columns[1][index])
+        // surplus: (value <= data.columns[1][index]) ? 0 : [data.columns[1][index], value]
+      }))
     },
     { 
       title:  data.columnTitles[1], 
-      entries: data.columns[1].map((value, index) => ({ label: data.rowTitles[index],  value }))
+      max:    data.columns[1].reduce((a, v) => (a < v) ? v : a, 0),
+      entries: data.columns[1].map((value, index) => ({ 
+        name: data.rowsTitles[index],  
+        value,
+        displayValue: Math.min(value, data.columns[0][index]),
+        surplus: Math.max(0, value - data.columns[0][index])
+        // surplus: [Math.min(value, data.columns[0][index]) + 10, Math.max(0, value - data.columns[0][index]) ]
+
+      }))
     },
   ]
 });

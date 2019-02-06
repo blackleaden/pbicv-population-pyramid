@@ -26,8 +26,10 @@ export const ENTRY_VALUE_FIELD: string = "value";
 */
 
 export interface IChartEntry{
-  "name": string;
-  "value": number;
+  name: string;
+  value: number;
+  surplus?: number;
+  total?: number;
 }
 
 export interface IAxisProps{
@@ -60,9 +62,11 @@ export const BasicBarChart = (props: {
   barProps: IBarProps,
   yAxis: IAxisProps, 
   xAxis: IAxisProps, 
+  tooltip?: boolean | React.ComponentType ,
+  reversed?: boolean
 }) => {
-  const { yAxis, xAxis, barProps, height, width, entries, style, layout } = props;
-  
+  const { yAxis, xAxis, barProps, height, width, entries, style, layout, tooltip, reversed } = props;
+  console.log('entries', entries);
   return (
     <div 
       className="column-chart-frame"
@@ -85,9 +89,17 @@ export const BasicBarChart = (props: {
               { ...xAxis } 
               interval={0} 
             />,
-            <YAxis type="number" { ...yAxis } />
+            <YAxis 
+              type="number"
+              reversed={reversed}
+              { ...yAxis } 
+            />
           ] : [
-            <XAxis type="number" { ...xAxis } />,
+            <XAxis 
+              type="number" 
+              { ...xAxis }
+              reversed={reversed} 
+            />,
             <YAxis 
               type="category" 
               interval={0} 
@@ -97,12 +109,19 @@ export const BasicBarChart = (props: {
           ]
         }
         <CartesianGrid stroke={GRID_COLOR} />
-        <Tooltip />
-        {/* <Tooltip content={CustomTooltip}/> */}
+        {tooltip && <Tooltip  {...(typeof tooltip !== 'boolean' ? { content: tooltip } : {})}/> }
         <Bar
-          dataKey={ENTRY_VALUE_FIELD}
+          dataKey={"displayValue"}
+          stackId="a"
           { ...barProps }
         />
+        <Bar
+          dataKey={"surplus"}
+          stackId="a"
+          { ...barProps }
+          fill="rgba(0,0,0,0.5)"
+        />
+        
       </BarChart>
     </div>
   );

@@ -1,12 +1,14 @@
 import * as React from "react";
 import { BasicBarChart } from "./BasicBarChart";
-import  powerbi from "powerbi-visuals-api"
 
 interface Dataset {
   title?: string,
+  max?: number;
   entries: Array<{
     name: string;
     value: number;
+    displayValue?: number;
+    surplus?: number;
   }>
 };
 
@@ -36,15 +38,30 @@ export class PyramidChart extends React.PureComponent<PyramidChartProps, Pyramid
       <div 
         className="column-chart-frame"
       >
+      <span className="title">{ title }</span>
+      <hr/>
+      <BasicBarChart
+        style={{ display: "inline-block",  outline: "goldenrod 1px solid" }}
+        layout={"vertical"} 
+        width={width / 2 - 35}
+        height={datasets[0].entries.length * 22 + 20}
+        entries={datasets[0].entries}
+        reversed={true}
+        barProps={{ barSize: 20, fill: "#F11" }}
+        xAxis={{ domain: [0, Math.max(datasets[0].max, datasets[1].max)*1.1 ]}}
+        yAxis={{}}
+        tooltip={true}
+      />
       <BasicBarChart
         layout={"vertical"} 
-        width={width}
-        height={height}
-        entries={datasets[0].entries}
-        
-        barProps={{ barSize: 30 }}
-        xAxis={{}}
-        yAxis={{}}
+        style={{ display: "inline-block", outline: "goldenrod 1px solid" }}
+        width={width / 2 - 35}
+        height={datasets[0].entries.length * 22 + 20}
+        entries={datasets[1].entries}
+        barProps={{ barSize: 20, fill: "#11F"  }}
+        xAxis={{ domain: [0, Math.max(datasets[0].max, datasets[1].max)*1.1] }}
+        yAxis={{ width: 0 }}
+        tooltip={true}
       />
     </div>
     );
