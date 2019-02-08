@@ -25,29 +25,21 @@
 */
 "use strict";
 import "@babel/polyfill";
+
 import "./../style/visual.less";
 
-import { renderReactVisual } from "./app";
-import TestComponent from "./components/TestComponent";
-
 import powerbi from "powerbi-visuals-api";
-
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
-import IVisualHost = powerbi.extensibility.visual.IVisualHost;
-import EnumerateVisualObjectInstancesOptions = powerbi.EnumerateVisualObjectInstancesOptions;
-import VisualObjectInstance = powerbi.VisualObjectInstance;
 import DataView = powerbi.DataView;
-import VisualObjectInstanceEnumerationObject = powerbi.VisualObjectInstanceEnumerationObject;
 
-import { VisualSettings } from "./settings";
+import { renderReactVisual } from "./react";
+
+import DataViewAdapter from "./components/DataViewAdapter";
+import ErrorBlurWrapper from "./components/ErrorBlurWrapper";
 
 export class Visual implements IVisual {
-
-  // private static parseSettings(dataView: DataView): VisualSettings {
-  //   return VisualSettings.parse(dataView) as VisualSettings;
-  // }
   
   public constructor(options: VisualConstructorOptions) {
     this.render(options.element);
@@ -61,18 +53,16 @@ export class Visual implements IVisual {
     this.updateCallback({ width, height, dataView });
   }
 
-  // public enumerateObjectInstances(
-  //   options: EnumerateVisualObjectInstancesOptions
-  // ): VisualObjectInstance[] | VisualObjectInstanceEnumerationObject {
-  //   return VisualSettings.enumerateObjectInstances(this.settings || VisualSettings.getDefault(), options);
-  // }
-
-  // private settings: VisualSettings;
+  public enumerateObjectInstances() {
+    return [];
+  }
 
   private updateCallback: (data: object) => void;
 
   private render(element: HTMLElement){
-    this.updateCallback = renderReactVisual(TestComponent, element);
+    this.updateCallback = renderReactVisual(
+      DataViewAdapter(ErrorBlurWrapper), 
+      element,
+    );
   }
-
 }

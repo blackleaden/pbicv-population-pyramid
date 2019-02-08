@@ -1,9 +1,96 @@
-p {
-    font-size: 20px;
-    font-weight: bold;
-    em {
-        background: yellow;
-        padding: 5px;
-        
+
+.chart-legend{
+  font-size: 14px;
+  .chart-dataset-titles-group{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    .chart-dataset-title{
+      display: inline-block;
+      width: 35%;
+      padding: 0 10px;
+      overflow: hidden;
+      text-align: left;
+      &:first-child{
+        text-align: right;
+        border-right: 1px #666 solid;
+      }
     }
+  }
+  .chart-y-axis-title{
+    display: inline-block;
+    width: 10%;
+
+    &.left{
+      float: left;
+    }
+    &.right{
+      float: right;
+      text-align: right;
+    }
+  }
+}
+
+.pyramid-chart{
+  header{
+    background: white;
+    z-index: 20;
+    position: relative;
+  }
+  .chart-frame{
+    font-size: 12px;
+    line-height: 14px;
+    &.scroll{
+      overflow-y: scroll;
+    }
+  }
+  
+  &.with-error{
+    .chart-frame{
+      overflow: hidden;
+    }
+  }
+}
+
+.error-layer{
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: block;
+  margin: 80px auto;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  
+  .error-message{
+    margin: 60px auto;  
+    max-width: 200px;
+    background: #fefefe;
+    // border: 1px #666 solid;
+    font-size: 14px;
+    padding: .8em;
+    .error-title{
+      font-weight: 600;
+      padding-bottom: .5em;
+    }
+    .error-description{
+      border-top: 1px #666 solid;
+      padding-top: .5em;
+    }
+  }
+}
+
+.chart-x-axis{
+  position: relative;
+  .detached-x-axis{
+    // outline: 1px solid goldenrod;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    &:last-child{
+      left: 50%;
+    }
+  }
 }

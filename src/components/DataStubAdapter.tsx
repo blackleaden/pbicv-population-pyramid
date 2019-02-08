@@ -1,6 +1,7 @@
 import * as React from "react";
+import { PyramidChartProps } from "./SolidPyramidChart";
 
-const StubData = {
+export const stubData = {
   "title": "Возрастное распределение городского и сельского населения РФ",
   "columnTitles": [
     "Городское",
@@ -61,8 +62,7 @@ const StubData = {
 ]
 }
 
-
-const mapStubData = (data) => ({
+export const mapStubData = (data) => ({
   title: data.title,
   datasets: [
     { 
@@ -72,9 +72,7 @@ const mapStubData = (data) => ({
         name: data.rowsTitles[index],  
         value,
         displayValue: Math.min(value , data.columns[1][index]),
-        // surplus: [Math.min(value, data.columns[1][index]) + 10, Math.max(0, value - data.columns[1][index]) ]
         surplus: Math.max(0, value - data.columns[1][index])
-        // surplus: (value <= data.columns[1][index]) ? 0 : [data.columns[1][index], value]
       }))
     },
     { 
@@ -85,18 +83,16 @@ const mapStubData = (data) => ({
         value,
         displayValue: Math.min(value, data.columns[0][index]),
         surplus: Math.max(0, value - data.columns[0][index])
-        // surplus: [Math.min(value, data.columns[0][index]) + 10, Math.max(0, value - data.columns[0][index]) ]
       }))
     },
   ]
 });
 
-export const DataStubAdapter = (ChartComponent) => 
+export const DataStubAdapter = (ChartComponent: React.ComponentType<PyramidChartProps>) => 
 (props: { width?: number, height?: number; dataView?: DataView }) => {
-
   return (
     <ChartComponent 
-      {...mapStubData(StubData)} 
+      {...mapStubData(stubData)} 
       width={props.width}
       height={props.height}
     />
