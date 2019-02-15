@@ -32,7 +32,63 @@
       ]
     }
   ],
-  "objects": {},
+  "objects": {
+    "chartSettings": {
+      "displayName": "Chart Settings",
+      "properties": {
+        "gridColor": {
+          "displayName": "Grid Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color":true
+              }
+            }
+          }
+        },
+        "leftSetColor": {
+          "displayName": "Left Set Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color":true
+              }
+            }
+          }
+        },
+        "leftSetSurplusColor": {
+          "displayName": "Left Set Surplus Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color":true
+              }
+            }
+          }
+        },
+        "rightSetColor": {
+          "displayName": "Right Set Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color":true
+              }
+            }
+          }
+        },
+        "rightSetSurplusColor": {
+          "displayName": "Right Set Surplus Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color":true
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   "dataViewMappings": [
     { 
       "conditions": [

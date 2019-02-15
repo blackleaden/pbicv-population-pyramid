@@ -1,6 +1,6 @@
 import * as React from "react";
 import SolidPyramidChart, { PyramidChartProps } from "./SolidPyramidChart";
-import DataStubAdapter, { mapStubData, stubData } from "./DataStubAdapter";
+import { mapStubData, stubData } from "./DataStubAdapter";
 
 
 export const ErrorMessage: React.StatelessComponent<{ title: string, description?: string }> = (props) =>
@@ -18,8 +18,8 @@ export const ChartLegend: React.StatelessComponent<PyramidChartProps> = (props) 
     <span className="chart-y-axis-title left">{props.categoryTitle}</span>
     <span className="chart-y-axis-title right">Total</span>    
     <div className="chart-dataset-titles-group">
-      <span className="chart-dataset-title">{props.datasets[0].title}</span>
-      <span className="chart-dataset-title">{props.datasets[1].title}</span>
+      <span className="chart-dataset-title">{props.leftSetTitle}</span>
+      <span className="chart-dataset-title">{props.rightSetTitle}</span>
     </div>
   </div>
 )
@@ -64,7 +64,10 @@ export class ErrorBlurChart extends React.PureComponent<PyramidChartProps, Error
               height={Math.max(0, height - SELF_HEIGHT)}
             />
             : <SolidPyramidChart 
-              {...(this.state.lastCorrectProps ? this.state.lastCorrectProps : mapStubData(stubData))} 
+              {...(this.state.lastCorrectProps 
+                ? this.state.lastCorrectProps 
+                : mapStubData(stubData))
+              } 
               width={Math.max(0, width - SELF_WIDTH)}
               height={Math.max(0, height - SELF_HEIGHT)}
             />

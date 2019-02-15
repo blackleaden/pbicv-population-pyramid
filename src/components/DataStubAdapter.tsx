@@ -1,12 +1,13 @@
 import * as React from "react";
 import { PyramidChartProps } from "./SolidPyramidChart";
+import { prepareEntriesFromDataSets } from "./DataViewAdapter";
 
 export const stubData = {
-  "title": "Возрастное распределение городского и сельского населения РФ",
   "columnTitles": [
-    "Городское",
-    "Сельское"
+    "Female",
+    "Male"
   ],
+  "categoryTitle": "age",
   "rowsTitles": [
     "0-4",
     "5-9",
@@ -22,7 +23,7 @@ export const stubData = {
     "55-59",
     "60-64",
     "65-69",
-    "70 и более"
+    "70 and more"
   ],
 "columns": [
   [
@@ -64,7 +65,14 @@ export const stubData = {
 
 export const mapStubData = (data) => ({
   title: data.title,
-  datasets: [
+  settings: {},
+  max: Math.max( 
+    data.columns[0].reduce((a, v) => (a < v) ? v : a, 0),
+    data.columns[1].reduce((a, v) => (a < v) ? v : a, 0)
+  ),
+  leftSetTitle: data.columnTitles[0],
+  rightSetTitle: data.columnTitles[1],
+  dataSets: [
     { 
       title: data.columnTitles[0], 
       max:    data.columns[0].reduce((a, v) => (a < v) ? v : a, 0),
@@ -90,9 +98,16 @@ export const mapStubData = (data) => ({
 
 export const DataStubAdapter = (ChartComponent: React.ComponentType<PyramidChartProps>) => 
 (props: { width?: number, height?: number; dataView?: DataView }) => {
+  const data = mapStubData(stubData);
+  
   return (
-    <ChartComponent 
-      {...mapStubData(stubData)} 
+    <ChartComponent
+      settings={data.settings}
+      max={data.max}
+      categoryTitle={stubData.categoryTitle}
+      leftSetTitle={data.leftSetTitle}
+      rightSetTitle={data.rightSetTitle}
+      entries={prepareEntriesFromDataSets(data.dataSets, data.max)}
       width={props.width}
       height={props.height}
     />

@@ -27,21 +27,33 @@
 "use strict";
 
 import { dataViewObjectsParser } from "powerbi-visuals-utils-dataviewutils";
+
+import {
+  BLUE,
+  RED,
+  DARK_BLUE,
+  DARK_RED,
+  GRID_COLOR
+} from "./constants"
+
 import DataViewObjectsParser = dataViewObjectsParser.DataViewObjectsParser;
 
 export class VisualSettings extends DataViewObjectsParser {
-  public dataPoint: dataPointSettings = new dataPointSettings();
+  public chartSettings: chartSettings = new chartSettings(); 
 }
 
-export class dataPointSettings {
-  // Default color
-  public defaultColor: string = "";
-  // Show all
-  public showAllDataPoints: boolean = true;
-  // Fill
-  public fill: string = "";
-  // Color saturation
-  public fillRule: string = "";
+export class chartSettings {
+  
+  public gridColor: string = GRID_COLOR;
+
+  public leftSetColor: string = BLUE;
+  public leftSetSurplusColor: string = DARK_BLUE;
+
+  public rightSetColor: string = RED;
+  public rightSetSurplusColor: string = DARK_RED;
+
+  public scrollChart: boolean = true;
+
   // Text Size
   public fontSize: number = 12;
 }

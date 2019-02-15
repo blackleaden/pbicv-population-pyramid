@@ -25,22 +25,24 @@
 */
 "use strict";
 import "@babel/polyfill";
-
-import "./../style/visual.less";
-
 import powerbi from "powerbi-visuals-api";
+
 import VisualConstructorOptions = powerbi.extensibility.visual.VisualConstructorOptions;
 import VisualUpdateOptions = powerbi.extensibility.visual.VisualUpdateOptions;
 import IVisual = powerbi.extensibility.visual.IVisual;
 import DataView = powerbi.DataView;
 
+import { VisualSettings } from "./settings";
 import { renderReactVisual } from "./react";
 
 import DataViewAdapter from "./components/DataViewAdapter";
 import ErrorBlurWrapper from "./components/ErrorBlurWrapper";
 
+import "./../style/visual.less";
+
 export class Visual implements IVisual {
-  
+  private settings: VisualSettings;
+
   public constructor(options: VisualConstructorOptions) {
     this.render(options.element);
   }
@@ -50,11 +52,16 @@ export class Visual implements IVisual {
     let height: number = options.viewport.height;
     
     let dataView: DataView = options.dataViews[0];
+    this.settings = VisualSettings.parse(dataView);
+  
     this.updateCallback({ width, height, dataView });
   }
 
-  public enumerateObjectInstances() {
-    return [];
+  public enumerateObjectInstances(
+    options: powerbi.EnumerateVisualObjectInstancesOptions
+  ): powerbi.VisualObjectInstanceEnumeration {
+    
+    return VisualSettings.enumerateObjectInstances(this.settings, options);
   }
 
   private updateCallback: (data: object) => void;

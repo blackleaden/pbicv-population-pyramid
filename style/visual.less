@@ -57,14 +57,16 @@
   top: 0;
   right: 0;
   display: block;
-  margin: 80px auto;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
   text-align: center;
   
   .error-message{
-    margin: 60px auto;  
+    margin: 50% auto;  
+    position: relative;
+    top: -60px;
     max-width: 200px;
     background: #fefefe;
     // border: 1px #666 solid;
@@ -92,5 +94,26 @@
     &:last-child{
       left: 50%;
     }
+  }
+}
+
+.custom-tooltip{
+  margin: 50% auto;  
+  position: relative;
+  top: -60px;
+  max-width: 200px;
+  background: #fefefe;
+  border: 1px #666 solid;
+  font-size: 14px;
+  padding: .8em;
+  .tooltip-title{
+    font-weight: 600;
+    padding-bottom: .2em;
+    margin: 0;
+  }
+  .tooltip-description{
+    border-top: 1px #666 solid;
+    margin: 0;
+    padding-top: .4em;
   }
 }
