@@ -4,8 +4,7 @@ export const Tooltip = (titles: { leftSetTitle?: string, rightSetTitle?: string,
   const { active } = props;
   const { leftSetTitle, rightSetTitle, categoryTitle } = titles;
   if (active) {
-    const { payload, label } = props;
-    console.log("tooltip payload", payload);
+    const { payload, label } = props; 
     const leftValue = payload.find(entry => entry.dataKey === "leftSetValue").value;
     const leftSurplus = payload.find(entry => entry.dataKey === "leftSetSurplus").value;
     const rightValue = payload.find(entry => entry.dataKey === "rightSetValue").value;

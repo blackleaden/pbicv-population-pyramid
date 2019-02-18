@@ -1,5 +1,5 @@
 import * as React from "react";
-import { BarChart, XAxis } from "recharts";
+import { BarChart, XAxis, AxisDomain } from "recharts";
  
 export const getDecimalTicks = (start: number, max: number): number[] => {
   const length = Math.floor(Math.max(0, max - start));
@@ -19,7 +19,6 @@ export const getDecimalTicks = (start: number, max: number): number[] => {
   return ticks;
 }
 
-
 export interface IAxisProps{
   domain?: number[];
   tick?: object | React.ComponentType;
@@ -32,7 +31,9 @@ export interface IAxisProps{
   reversed?: boolean;
 };
 
-export const DetachedXAxis: React.StatelessComponent<IAxisProps> = (props) => {
+export const DetachedXAxis: React.StatelessComponent<IAxisProps> = (props: { 
+  width?: number, height?: number, domain: [number, number]
+}) => {
   const { width, height, domain } = props;
   
   return (
@@ -44,9 +45,11 @@ export const DetachedXAxis: React.StatelessComponent<IAxisProps> = (props) => {
         margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
       > 
         <XAxis 
-          { ...props} 
+          width={width}
+          height={height}
+          domain={domain as [AxisDomain, AxisDomain]}
           type="number"
-          ticks={getDecimalTicks(0, domain[1])} 
+          ticks={getDecimalTicks(0, domain[1] as number)} 
           allowDataOverflow={true}
           interval={0}
         />

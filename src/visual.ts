@@ -54,7 +54,7 @@ export class Visual implements IVisual {
     let dataView: DataView = options.dataViews[0];
     this.settings = VisualSettings.parse(dataView);
   
-    this.updateCallback({ width, height, dataView });
+    this.updateCallback({ width, height, dataView, settings: this.settings });
   }
 
   public enumerateObjectInstances(

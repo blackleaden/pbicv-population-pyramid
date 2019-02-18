@@ -10,14 +10,14 @@
   "scripts": {
     "pbiviz": "pbiviz",
     "start": "pbiviz start",
-    "package": "pbiviz package"
+    "package": "pbiviz package",
+    "test": "jest --env=jsdom"
   },
   "dependencies": {
     "@babel/polyfill": "7.0.0",
     "@babel/runtime": "^7.2.0",
     "@babel/runtime-corejs2": "^7.2.0",
     "@types/d3": "^3.5.41",
-    "blahblah": "^0.1.0",
     "d3": "^3.5.5",
     "powerbi-visuals-api": "^2.2.2",
     "powerbi-visuals-utils-dataviewutils": "2.0.1",
@@ -26,8 +26,16 @@
     "recharts": "^1.4.2"
   },
   "devDependencies": {
+    "@types/enzyme": "^3.1.18",
+    "@types/jest": "^24.0.5",
     "@types/react": "^16.7.22",
     "@types/react-dom": "^16.0.11",
+    "@types/recharts": "^1.1.11",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "jest": "^24.1.0",
+    "react-test-renderer": "^16.8.2",
+    "ts-jest": "^23.10.5",
     "ts-loader": "4.5.0",
     "typescript": "3.0.1"
   }

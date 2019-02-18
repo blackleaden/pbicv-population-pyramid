@@ -41,7 +41,7 @@ export const X_AXIS_SIZE: number = 20;
   Helpers
  */
 
-const countBarSize = (height, length) => 
+const countBarSize = (height: number, length: number): number => 
   Math.min((height - X_AXIS_SIZE) / (length || 1), BAR_MAX_SIZE);
 
 export const SolidPyramidChart: React.StatelessComponent<PyramidChartProps> = (props) => {

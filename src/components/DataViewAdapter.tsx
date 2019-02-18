@@ -1,7 +1,7 @@
 import * as React from "react";
 import powerbi from "powerbi-visuals-api";
 
-import { chartSettings } from "../settings";
+import { chartSettings, VisualSettings } from "../settings";
 import { GRID_COLOR, BLUE, DARK_BLUE, RED, DARK_RED } from "../constants";
 
 import { PyramidChartProps, Settings, Dataset, PyramidChartEntry } from "./SolidPyramidChart/types";
@@ -29,34 +29,6 @@ export const prepareEntriesFromDataSets = (dataSets: Dataset[], max): PyramidCha
   );
 }
 
-export const prepareSettings = (
-  dataView: powerbi.DataView
-): Settings => {
-  if (!(dataView.metadata.objects && dataView.metadata.objects.chartSettings)){
-    return new chartSettings() as Settings;
-  } else {
-    const chartSettings = dataView.metadata.objects.chartSettings;
-    return ({
-      //REVIEW
-      gridColor:  chartSettings.gridColor 
-        ? chartSettings.gridColor.valueOf() 
-        : GRID_COLOR, 
-      // fontSize: chartSettings.fontSize.valueOf(), // = FONT_SIZE,
-      leftSetColor: chartSettings.leftSetColor 
-        ? chartSettings.leftSetColor.valueOf() 
-        : BLUE,  
-      leftSetSurplusColor: chartSettings.leftSetSurplusColor 
-        ? chartSettings.leftSetSurplusColor.valueOf() 
-        : DARK_BLUE,  
-      rightSetColor: chartSettings.rightSetColor 
-        ? chartSettings.rightSetColor.valueOf() 
-        : RED, 
-      rightSetSurplusColor: chartSettings.rightSetSurplusColor 
-        ? chartSettings.rightSetSurplusColor.valueOf() 
-        : DARK_RED, 
-    }) as Settings;
-  }
-}
 
 export const mapDataView = (dataView: powerbi.DataView): Partial<PyramidChartProps> => {
 
@@ -80,9 +52,8 @@ export const mapDataView = (dataView: powerbi.DataView): Partial<PyramidChartPro
   const firstValues = series[0].values[0].values as number[];
   const secondValues = series[1].values[0].values as number[];
 
-  const result: IntermediateData = {
+  const result: Partial<IntermediateData> = {
     categoryTitle: String(dataView.categorical.categories[0].source.displayName),
-    settings: prepareSettings(dataView),
     entries: [] as PyramidChartEntry[],
     max: Math.max(
       firstValues.reduce((a, v) => (a < v) ? v : a, 0),
@@ -126,10 +97,15 @@ export const isValidDataView = (dataView: powerbi.DataView): boolean => !!(
   );
 
 export const DataViewAdapter = (ChartComponent: React.ComponentType<PyramidChartProps>) => 
-(props: { width?: number, height?: number; dataView: powerbi.DataView }) => {
-  let error: boolean = false;
-  let data: IntermediateData = { dataSets: [], settings: {}, entries: [], max: 0 };
-  
+(props: { width?: number, height?: number; dataView: powerbi.DataView, settings: VisualSettings }) => {
+ 
+  let data: IntermediateData = { 
+    dataSets: [], 
+    settings: props.settings ? props.settings.chartSettings : {}, 
+    entries: [], 
+    max: 0 
+  };
+ 
   try{
     data = { 
       ...data, 
@@ -153,7 +129,7 @@ export const DataViewAdapter = (ChartComponent: React.ComponentType<PyramidChart
       error: true,
     };
   }
-  console.log('data', data);
+  
   return (
     <ChartComponent 
       error={!!data.error}

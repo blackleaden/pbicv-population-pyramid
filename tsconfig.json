@@ -1,21 +1,24 @@
 {
-    "compilerOptions": {
-        "allowJs": false,
-        "jsx": "react",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
-        "target": "es6",
-        "sourceMap": true,
-        "outDir": "./.tmp/build/",
-        "moduleResolution": "node",
-        "declaration": true,
-        "types": ["react"],
-        "lib": [
-            "es2015",
-            "dom"
-        ]
-    },
-    "files": [
-        "./src/visual.ts"
+  "compilerOptions": {
+    "allowJs": false,
+    "jsx": "react",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "outDir": "./.tmp/build/",
+    "moduleResolution": "node",
+    "declaration": true,
+    "types": ["react", "jest"],
+    "lib": [
+      "es2015",
+      "dom"
     ]
+  },
+  "files": [
+      "./src/visual.ts"
+  ],
+  "env": {
+    "jest": true
+  }
 }
