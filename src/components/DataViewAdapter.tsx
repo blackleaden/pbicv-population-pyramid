@@ -4,17 +4,12 @@ import powerbi from "powerbi-visuals-api";
 import { chartSettings, VisualSettings } from "../settings";
 import { GRID_COLOR, BLUE, DARK_BLUE, RED, DARK_RED } from "../constants";
 
-import { PyramidChartProps, Settings, Dataset, PyramidChartEntry } from "./SolidPyramidChart/types";
-
-interface IntermediateData extends PyramidChartProps {
-  dataSets: Dataset[]
-}
+import { PyramidChartProps, IntermediateData, Dataset, PyramidChartEntry } from "./types";
 
 export const NBSP: string = " ";
 
-export const prepareEntriesFromDataSets = (dataSets: Dataset[], max): PyramidChartEntry[] => {
-  console.log('prepareEntriesFromDataSets', dataSets[0], dataSets[1], max, !Array.isArray(dataSets[0]) );
-  return (!dataSets[0] || !Array.isArray(dataSets[0].entries))
+export const prepareEntriesFromDataSets = (dataSets: Dataset[], max): PyramidChartEntry[] => 
+  (!dataSets[0] || !Array.isArray(dataSets[0].entries))
   ? [] 
   : dataSets[0].entries.map(
     (entry, index) => ({
@@ -27,7 +22,7 @@ export const prepareEntriesFromDataSets = (dataSets: Dataset[], max): PyramidCha
       total: entry.value + dataSets[1].entries[index].value,
     })
   );
-}
+
 
 
 export const mapDataView = (dataView: powerbi.DataView): Partial<PyramidChartProps> => {

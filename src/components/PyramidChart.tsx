@@ -1,7 +1,9 @@
 import * as React from "react";
-import SolidPyramidChart, { PyramidChartProps } from "./SolidPyramidChart";
+import PyramidChartFrame from "./PyramidChartFrame";
 import { mapStubData, stubData } from "./DataStubAdapter";
+import { PyramidChartProps } from "./types";
 
+import PyramidChartLegend from "./PyramidChartLegend";
 
 export const ErrorMessage: React.StatelessComponent<{ title: string, description?: string }> = (props) =>
 (
@@ -13,24 +15,15 @@ export const ErrorMessage: React.StatelessComponent<{ title: string, description
   </footer>
 );
 
-export const ChartLegend: React.StatelessComponent<PyramidChartProps> = (props) => (
-  <div className="chart-legend">
-    <span className="chart-y-axis-title left">{props.categoryTitle}</span>
-    <span className="chart-y-axis-title right">Total</span>    
-    <div className="chart-dataset-titles-group">
-      <span className="chart-dataset-title">{props.leftSetTitle}</span>
-      <span className="chart-dataset-title">{props.rightSetTitle}</span>
-    </div>
-  </div>
-)
-export type ErrorBlurState = Readonly<{
+
+export type PyramidChartState = Readonly<{
   lastCorrectProps?: PyramidChartProps
 }>
 
 const SELF_WIDTH = 0;
 const SELF_HEIGHT = 20;
 
-export class ErrorBlurChart extends React.PureComponent<PyramidChartProps, ErrorBlurState> {
+export class PyramidChartVisual extends React.PureComponent<PyramidChartProps, PyramidChartState> {
   public static defaultProps: Partial<PyramidChartProps>;
   
   public constructor(props: PyramidChartProps){
@@ -51,19 +44,19 @@ export class ErrorBlurChart extends React.PureComponent<PyramidChartProps, Error
     return (
       <article className={`pyramid-chart ${error ? "with-error" : ""}`}>
         <header >
-          {!error && <ChartLegend {...this.props} /> }
+          {!error && <PyramidChartLegend {...this.props} /> }
         </header>
         <main 
           style={error ? { filter: "blur(10px)" } : {}} 
           className="chart-main"
         >
           { !error 
-            ? <SolidPyramidChart 
+            ? <PyramidChartFrame 
               {...this.props} 
               width={Math.max(0, width - SELF_WIDTH)}
               height={Math.max(0, height - SELF_HEIGHT)}
             />
-            : <SolidPyramidChart 
+            : <PyramidChartFrame 
               {...(this.state.lastCorrectProps 
                 ? this.state.lastCorrectProps 
                 : mapStubData(stubData))
@@ -84,5 +77,5 @@ export class ErrorBlurChart extends React.PureComponent<PyramidChartProps, Error
   }
 }
 
-export default ErrorBlurChart;
+export default PyramidChartVisual;
 

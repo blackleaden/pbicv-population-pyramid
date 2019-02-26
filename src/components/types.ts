@@ -43,6 +43,6 @@ export interface PyramidChartProps{
   error?: boolean;
 }
 
-export type PyramidChartState = Readonly<{
-
-}>
+export interface IntermediateData extends PyramidChartProps {
+  dataSets: Dataset[]
+}

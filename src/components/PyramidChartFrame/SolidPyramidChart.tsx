@@ -11,6 +11,7 @@ import {
 import { YAxisTick } from './YAxisTick';
 import { DetachedXAxis } from './DetachedXAxis';
 import { Tooltip as PyramidChartTooltip } from "./Tooltip";
+
 /*
   Constants
 */
@@ -26,7 +27,7 @@ import {
 
 import {
   PyramidChartProps,
-} from './types';
+} from '../types';
 
 export const ENTRY_CAPTION_FIELD: string = "name";
 export const ENTRY_VALUE_FIELD: string = "value";
@@ -36,6 +37,8 @@ export const TRANSPARENT: string = "rgba(0,0,0,0)";
 export const BAR_SIZE: number = 20;
 export const BAR_MAX_SIZE: number = 30;
 export const X_AXIS_SIZE: number = 20;
+export const DEFAULT_WIDTH: number = 400;
+export const DEFAULT_HEIGHT: number = 200;
 
 /*
   Helpers
@@ -45,8 +48,10 @@ const countBarSize = (height: number, length: number): number =>
   Math.min((height - X_AXIS_SIZE) / (length || 1), BAR_MAX_SIZE);
 
 export const SolidPyramidChart: React.StatelessComponent<PyramidChartProps> = (props) => {
-  const { width, max, entries = [], height, settings } = props;
-  
+  const {  max, entries = [], settings } = props;
+  const width = props.width || DEFAULT_WIDTH;
+  const height = props.height || DEFAULT_HEIGHT;
+
   const { 
     scroll, 
     gridColor = GRID_COLOR, 

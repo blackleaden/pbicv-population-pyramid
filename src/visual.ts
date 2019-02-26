@@ -36,7 +36,7 @@ import { VisualSettings } from "./settings";
 import { renderReactVisual } from "./react";
 
 import DataViewAdapter from "./components/DataViewAdapter";
-import ErrorBlurWrapper from "./components/ErrorBlurWrapper";
+import PyramidChart from "./components/PyramidChart";
 
 import "./../style/visual.less";
 
@@ -68,7 +68,7 @@ export class Visual implements IVisual {
 
   private render(element: HTMLElement){
     this.updateCallback = renderReactVisual(
-      DataViewAdapter(ErrorBlurWrapper), 
+      DataViewAdapter(PyramidChart), 
       element,
     );
   }

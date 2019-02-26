@@ -1,6 +1,7 @@
 import * as React from "react";
-import { PyramidChartProps } from "./SolidPyramidChart";
+import { PyramidChartProps, IntermediateData } from "./types";
 import { prepareEntriesFromDataSets } from "./DataViewAdapter";
+
 
 export const stubData = {
   "columnTitles": [
@@ -63,8 +64,12 @@ export const stubData = {
 ]
 }
 
-export const mapStubData = (data) => ({
-  title: data.title,
+export const mapStubData = (data: { 
+  columns: number[][], 
+  rowsTitles: string[], 
+  columnTitles: string[],
+  categoryTitle: string
+}) => ({
   settings: {},
   max: Math.max( 
     data.columns[0].reduce((a, v) => (a < v) ? v : a, 0),
@@ -72,6 +77,7 @@ export const mapStubData = (data) => ({
   ),
   leftSetTitle: data.columnTitles[0],
   rightSetTitle: data.columnTitles[1],
+  categoryTitle: data.categoryTitle,
   dataSets: [
     { 
       title: data.columnTitles[0], 
@@ -96,22 +102,31 @@ export const mapStubData = (data) => ({
   ]
 });
 
-export const DataStubAdapter = (ChartComponent: React.ComponentType<PyramidChartProps>) => 
-(props: { width?: number, height?: number; dataView?: DataView }) => {
-  const data = mapStubData(stubData);
-  
-  return (
-    <ChartComponent
-      settings={data.settings}
-      max={data.max}
-      categoryTitle={stubData.categoryTitle}
-      leftSetTitle={data.leftSetTitle}
-      rightSetTitle={data.rightSetTitle}
-      entries={prepareEntriesFromDataSets(data.dataSets, data.max)}
-      width={props.width}
-      height={props.height}
-    />
-  )
+const prepareData = (): PyramidChartProps => {
+  let data: IntermediateData = mapStubData(stubData); 
+  data = {
+    ...mapStubData(stubData),
+    entries: prepareEntriesFromDataSets(data.dataSets, data.max)
+  };
+  delete data.dataSets;
+  return data;
 }
+
+export const stubProps: PyramidChartProps = prepareData();
+
+export const DataStubAdapter = (ChartComponent: React.ComponentType<PyramidChartProps>) => 
+(props: { width?: number, height?: number; dataView?: DataView }) => (
+  <ChartComponent
+    settings={stubProps.settings}
+    max={stubProps.max}
+    categoryTitle={stubProps.categoryTitle}
+    leftSetTitle={stubProps.leftSetTitle}
+    rightSetTitle={stubProps.rightSetTitle}
+    entries={stubProps.entries}
+    width={props.width}
+    height={props.height}
+  />
+)
+
 
 export default DataStubAdapter;

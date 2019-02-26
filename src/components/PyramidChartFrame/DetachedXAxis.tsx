@@ -32,7 +32,7 @@ export interface IAxisProps{
 };
 
 export const DetachedXAxis: React.StatelessComponent<IAxisProps> = (props: { 
-  width?: number, height?: number, domain: [number, number]
+  width?: number, height?: number, domain: [number, number], reversed
 }) => {
   const { width, height, domain } = props;
   
@@ -52,6 +52,7 @@ export const DetachedXAxis: React.StatelessComponent<IAxisProps> = (props: {
           ticks={getDecimalTicks(0, domain[1] as number)} 
           allowDataOverflow={true}
           interval={0}
+          reversed={props.reversed}
         />
       </BarChart>
     </div>
