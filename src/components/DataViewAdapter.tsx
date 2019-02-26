@@ -23,8 +23,6 @@ export const prepareEntriesFromDataSets = (dataSets: Dataset[], max): PyramidCha
     })
   );
 
-
-
 export const mapDataView = (dataView: powerbi.DataView): Partial<PyramidChartProps> => {
 
   if (!isValidDataView(dataView)){
@@ -114,20 +112,22 @@ export const DataViewAdapter = (ChartComponent: React.ComponentType<PyramidChart
       && data.dataSets[1].max
       && Array.isArray(data.dataSets[1].entries)
     )) {
-      data.error = true;
+      throw {
+        title: "Invalid data",
+        description: "Series are not given"
+      }
     }
 
-  } catch (e) {
-    data = {
-      ...(typeof e === "object" ? e : { title: String(e) ? String(e) : "Invalid data" }),
-      dataSets: [],
-      error: true,
-    };
+  } catch (error) {
+    data.error = (typeof error === "object" 
+      ? error 
+      : { title: String(error) ? String(error) : "Invalid data" }
+    )
   }
   
   return (
     <ChartComponent 
-      error={!!data.error}
+      error={data.error}
       settings={data.settings}
       max={data.max}
       categoryTitle={data.categoryTitle}

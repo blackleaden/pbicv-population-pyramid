@@ -38,16 +38,20 @@ export class PyramidChartVisual extends React.PureComponent<PyramidChartProps, P
   }
 
   public render () {
-    const { error,  width, height, description } = this.props;
-    const title = this.props.title ? this.props.title.trim() : "";
-
+    const { error, width, height } = this.props;
+    
     return (
-      <article className={`pyramid-chart ${error ? "with-error" : ""}`}>
-        <header >
-          {!error && <PyramidChartLegend {...this.props} /> }
+      <article 
+        className={`pyramid-chart ${error ? "with-error" : ""}`}
+        
+      >
+        <header 
+          style={error ? { filter: "blur(10px)" } : {}}   
+        >
+          <PyramidChartLegend {...this.props} />
         </header>
         <main 
-          style={error ? { filter: "blur(10px)" } : {}} 
+          style={error ? { filter: "blur(10px)" } : {}}   
           className="chart-main"
         >
           { !error 
@@ -68,8 +72,8 @@ export class PyramidChartVisual extends React.PureComponent<PyramidChartProps, P
         </main>
         {error 
           && <ErrorMessage 
-            title={title}
-            description={description}
+            title={error.title}
+            description={error.description}
           />
         }
       </article>

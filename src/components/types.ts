@@ -30,17 +30,18 @@ export interface PyramidChartEntry{
 }
 
 export interface PyramidChartProps{
-  title?: string;
   width?: number;
   height?: number;
   entries?: PyramidChartEntry[];
   max: number;
   leftSetTitle?: string; 
   rightSetTitle?:  string;
-  description?: string;
   settings: Settings;
   categoryTitle?: string;
-  error?: boolean;
+  error?: {
+    title?: string;
+    description?: string;
+  };
 }
 
 export interface IntermediateData extends PyramidChartProps {
