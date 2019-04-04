@@ -42,7 +42,6 @@ describe("SolidPyramidChart Component", () => {
   );
 
   test("Renders all data entries given", () => {
-
     expect(
       stubDataComponent
       .find(".recharts-yAxis.yAxis .recharts-cartesian-axis-ticks").exists()

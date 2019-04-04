@@ -42,8 +42,7 @@ export class PyramidChartVisual extends React.PureComponent<PyramidChartProps, P
     
     return (
       <article 
-        className={`pyramid-chart ${error ? "with-error" : ""}`}
-        
+        className={`pyramid-chart ${error ? "with-error" : ""}`} 
       >
         <header 
           style={error ? { filter: "blur(10px)" } : {}}   

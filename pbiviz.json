@@ -1,19 +1,19 @@
-{
+{ 
     "visual":{
         "name":"PopulationPyramid",
         "displayName":"PopulationPyramid",
-        "guid":"circleCard9A06B62FC3194D24A0D167A92B7A6E96",
+        "guid":"populationPyramid9A06B62FC3194D24A0D167A92B7A6E96",
         "visualClassName":"Visual",
         "version":"1.0.0",
         "description":"Population Pyramid Custom Visual",
-        "supportUrl":"",
-        "gitHubUrl":""
+        "supportUrl":"https://community.powerbi.com",
+        "gitHubUrl":"https://github.com/blackleaden/pbicv-population-pyramid.git"
     },
     "version":"1.0.0",
     "apiVersion":"2.2.0",
     "author":{
-        "name":"",
-        "email":""
+        "name":"Denis Lapatkin",
+        "email":"v-delapa@microsoft.com"
     },
     "assets":{
         "icon":"assets/icon.png"
